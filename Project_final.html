@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SmartBottle X Series</title>
+  <style>
+    :root {
+      --primary-light: #0f62fe;
+      --primary-dark: #61a0ff;
+      --accent-light: #eaf2ff;
+      --accent-dark: #1e1e2f;
+      --text-dark: #222;
+      --text-light: #fff;
+      --bg-light: #f9f9f9;
+      --bg-dark: #121212;
+      --card-light: #fff;
+      --card-dark: #1f1f1f;
+    }
+
+    [data-theme="light"] {
+      --primary: var(--primary-light);
+      --accent: var(--accent-light);
+      --text: var(--text-dark);
+      --bg: var(--bg-light);
+      --card: var(--card-light);
+    }
+
+    [data-theme="dark"] {
+      --primary: var(--primary-dark);
+      --accent: var(--accent-dark);
+      --text: var(--text-light);
+      --bg: var(--bg-dark);
+      --card: var(--card-dark);
+    }
+
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 1000;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    header {
+      background: var(--primary);
+      color: var(--text-light);
+      padding: 3rem 1rem;
+      text-align: center;
+    }
+
+    header img {
+      width: 300px;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    section {
+      max-width: 1100px;
+      padding: 3rem 1rem;
+      margin: auto;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.06);
+      transition: transform 0.3s ease, background 0.3s;
+      text-align: center;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature img {
+      width: 100%;
+      max-width: 200px;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+    }
+
+    .feature h3 {
+      margin-bottom: 0.75rem;
+      color: var(--primary);
+    }
+
+    .testimonials {
+      background: var(--accent);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    .testimonial {
+      display: none;
+      font-style: italic;
+      color: var(--text);
+    }
+
+    .testimonial.active {
+      display: block;
+    }
+
+    .cta {
+      background: var(--primary);
+      color: var(--text-light);
+      text-align: center;
+      padding: 2.5rem 1rem;
+      margin-top: 3rem;
+      border-radius: 10px;
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta button {
+      background: #fff;
+      color: var(--primary);
+      border: none;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .price-plans {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .plan {
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+      flex: 1 1 250px;
+    }
+
+    .plan h4 {
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .faq h3 {
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .faq p {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .contact form {
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    input,
+    textarea {
+      padding: 0.8rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      resize: vertical;
+      background: white;
+    }
+
+    form button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+
+    footer {
+      background: #111;
+      color: #ccc;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      .cta h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()">Change Theme</button>
+
+  <header>
+    <img src="title.png" alt="SmartBottle X Series" />
+    <h1>SmartBottle X Series</h1>
+    <p>Three bottles. One goal — Smarter Hydration.</p>
+  </header>
+
+  <section>
+    <h2 style="text-align:center; margin-bottom: 2rem;">Find the Right Bottle for You</h2>
+    <div class="features">
+      <div class="feature">
+        <img src="starter.png" alt="Starter Bottle">
+        <h3>Starter – Simple & Essential</h3>
+        <p>Track your water intake with a smart cap and basic hydration reminder system. Ideal for beginners.</p>
+      </div>
+      <div class="feature">
+        <img src="pro.png" alt="Pro Bottle">
+        <h3>Pro – Stay in Sync</h3>
+        <p>All Starter features + LED Alerts & Bluetooth App Sync. Perfect for daily lifestyle users.</p>
+      </div>
+      <div class="feature">
+        <img src="elite.png" alt="Elite Bottle">
+        <h3>Elite – Premium Experience</h3>
+        <p>All Pro features + Premium Matte Finish, Advanced Analytics & 1-Year Warranty. Designed for power users.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <h2>Loved by Hydration Enthusiasts</h2>
+    <div class="testimonial active">“The Starter bottle helped me start my hydration journey.” — Akansha D.</div>
+    <div class="testimonial">“The Pro version syncs flawlessly with my app. Love the LED alert!” — Ravi K.</div>
+    <div class="testimonial">“Elite is next-level. I love the feel, the finish, and the battery life!” — Sneha J.</div>
+  </section>
+
+  <section class="cta">
+    <h2>Choose Your SmartBottle X</h2>
+    <button onclick="window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })">Order Now</button>
+  </section>
+
+  <section>
+    <h2 style="text-align:center; margin-bottom: 2rem;">Compare & Choose</h2>
+    <div class="price-plans">
+      <div class="plan">
+        <h4>Starter</h4>
+        <p><strong>₹1,999</strong></p>
+        <p>✅ Basic Hydration Tracking<br>✅ Smart Cap Sensor<br>❌ LED Alerts<br>❌ App Sync</p>
+      </div>
+      <div class="plan">
+        <h4>Pro</h4>
+        <p><strong>₹2,999</strong></p>
+        <p>✅ Everything in Starter<br>✅ LED Alerts<br>✅ Bluetooth App Sync<br>❌ Premium Finish</p>
+      </div>
+      <div class="plan">
+        <h4>Elite</h4>
+        <p><strong>₹3,999</strong></p>
+        <p>✅ Everything in Pro<br>✅ Premium Finish<br>✅ Advanced Analytics<br>✅ 1-Year Warranty</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>FAQs</h2>
+    <h3>🧴 How do I charge SmartBottle X?</h3>
+    <p>It comes with a USB-C cable. A 2-hour charge lasts up to 10 days.</p>
+
+    <h3>📱 Can I use it without the app?</h3>
+    <p>Yes, Starter and Elite both work without the app. Pro requires app sync for full features.</p>
+
+    <h3>💧 Is the bottle dishwasher-safe?</h3>
+    <p>Only the stainless steel interior is dishwasher safe. The electronic base should be wiped gently.</p>
+  </section>
+
+  <section class="contact">
+    <h2>Contact Us</h2>
+    <form action="https://formspree.io/f/yourformid" method="POST">
+      <input type="text" name="name" placeholder="Your name" required />
+      <input type="email" name="email" placeholder="Your email" required />
+      <textarea name="message" rows="5" placeholder="Your message..."></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    &copy; 2025 SmartBottle X — Made with 💧 for healthier living.
+  </footer>
+
+  <script>
+    // Testimonial Slider
+    const testimonials = document.querySelectorAll('.testimonial');
+    let index = 0;
+    setInterval(() => {
+      testimonials[index].classList.remove('active');
+      index = (index + 1) % testimonials.length;
+      testimonials[index].classList.add('active');
+    }, 5000);
+
+    // Theme Toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      html.setAttribute('data-theme', currentTheme === 'light' ? 'dark' : 'light');
+    }
+  </script>
+</body>
+</html>
